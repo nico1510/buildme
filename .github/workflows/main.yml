@@ -32,5 +32,6 @@ jobs:
         uses: docker/build-push-action@v6
         with:
           tags: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
+          load: true
           push: false
   
