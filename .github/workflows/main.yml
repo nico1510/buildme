@@ -14,24 +14,17 @@ jobs:
       - name: Log in to Docker Hub
         uses: docker/login-action@v3
         with:
-          registry: registry-1-stage.docker.io
           username: ${{ vars.DOCKER_USER }}
           password: ${{ secrets.DOCKER_PAT }}
       - name: Set up Docker Buildx
         uses: docker/setup-buildx-action@v3
         with:
           driver: cloud
-          driver-opts: |
-            internal.auth.host=https://auth-stage.docker.io
-            internal.auth.entry=registry-1-stage.docker.io
-            internal.address=tcp://build-cloud-stage.docker.com:443
-            internal.hub.host=https://hub-stage.docker.com
-          endpoint: "dbcdeactivatedorg/boo"
+          endpoint: "docker/hydrobuildtest"
           install: true
       - name: Build and push
         uses: docker/build-push-action@v6
         with:
-          tags: "registry-1-stage.docker.io/${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
-          # For pull requests, export results to the build cache.
-          # Otherwise, push to a registry.
-          outputs: ${{ github.event_name == 'pull_request' && 'type=cacheonly' || 'type=registry' }}
+          tags: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
+          outputs: 'type=cacheonly'
+  
