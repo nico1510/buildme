@@ -21,6 +21,11 @@ jobs:
         uses: docker/setup-buildx-action@v3
         with:
           driver: cloud
+          driver-opts: |
+            internal.auth.host=https://auth-stage.docker.io
+            internal.auth.entry=registry-1-stage.docker.io
+            internal.address=tcp://build-cloud-stage.docker.com:443
+            internal.hub.host=https://hub-stage.docker.com
           endpoint: "docker/hydrobuildtest"
           install: true
       - name: Build and push
