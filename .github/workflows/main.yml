@@ -29,9 +29,7 @@ jobs:
           endpoint: "docker/hydrobuildtest"
           install: true
       - name: Build and push
-        uses: docker/build-push-action@v6
+        uses: ./.github/actions/docker-build-push-action
         with:
-          tags: "${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
-          load: true
-          push: false
-  
+          tags: "registry-1-stage.docker.io/${{ vars.DOCKER_USER }}/docker-build-cloud-demo:latest"
+          push: true
